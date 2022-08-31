@@ -3,7 +3,7 @@ import nuvens from "../../assets/clouds.png";
 import cano from "../../assets/pipe.png";
 import mario from "../../assets/mario.gif";
 import gameOver from "../../assets/game-over.png";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 function Jogo() {
   /*
@@ -22,6 +22,7 @@ function Jogo() {
   // tudo o que está sendo renderizado
   const [estaPulando, setEstaPulando] = useState(false);
   const [estaMorto, setEstaMorto] = useState(false);
+  const [pontos, setPontos] = useState(0);
 
   // Criamos as referências para `mario` e `cano`
   const marioRef = useRef();
@@ -63,12 +64,25 @@ function Jogo() {
     setEstaMorto(true);
   }, 100);
 
-  /*
-  Quando estiver morto:
-  - Mudar a imagem do Mario
-  - Pausar animações
-  - Salvar a pontuação
-  */
+  // UseEffect
+  useEffect(
+    function () {
+      // Salvar a pontuação
+      const interval = setInterval(function () {
+        if (estaMorto) {
+          return;
+        }
+
+    setPontos(pontos + 1);
+
+  console.log({ pontos });
+    }, 500);
+
+    return () => clearInterval(interval);
+    },
+    [estaMorto, pontos]
+  );
+
   document.onkeydown = function () {
     // Atualizamos o estado para true
     setEstaPulando(true);
@@ -85,6 +99,9 @@ function Jogo() {
   if (estaPulando) {
     marioClassName = "mario mario-pulo";
   }
+
+  // Outra forma de simplificar, usando ternário
+  // const marioClassName = "mario " + (estaPulando ? "mario-pulo" : "");
 
   // No lugar de declarar uma variável e mudar o valor dela em um caso de `if`,
   // como fizemos com o className do Mario, podemos criar uma variável
