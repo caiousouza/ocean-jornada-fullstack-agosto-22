@@ -93,13 +93,19 @@ function Jogo() {
   // Esse é o Operador Ternário!
   const marioImage = estaMorto ? gameOver : mario;
 
+  const pararAnimacao = estaMorto ? "parar-animacao" : "";
+
   return (
     <div className="jogo">
       <img className="nuvens" src={nuvens} alt="Nuvens" />
 
-      <img ref={canoRef} className="cano" src={cano} alt="Cano" />
+      <img
+        ref={canoRef}
+        className={"cano " + pararAnimacao}
+        src={cano}
+        alt="Cano"
+      />
 
-      <img ref={marioRef} className={marioClassName} src={mario} alt="Mário" />
       <img
         ref={marioRef}
         className={marioClassName}
