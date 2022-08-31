@@ -5,7 +5,7 @@ import mario from "../../assets/mario.gif";
 import gameOver from "../../assets/game-over.png";
 import React, { useEffect, useRef, useState } from "react";
 
-function Jogo() {
+function Jogo(props) {
   /*
   const estaPulando = useState(false);
   const estado = estaPulando[0];
@@ -45,24 +45,33 @@ function Jogo() {
       mario.offsetTop + mario.offsetHeight > cano.offsetTop
     );
   }
-  // Implementação temporária para exibir se o mário está no cano
-  // ou não
-  setInterval(function () {
-    const valor = marioEstaNoCano();
-    // Pegamos o valor que determinar se o Mario
-    // está no cano ou não
-    const estaNoCano = marioEstaNoCano();
 
-    console.log("Mário está no cano?", valor);
-    // Se o Mario não estiver no cano, encerramos a função com `return`
-    if (!estaNoCano) {
-      return;
-    }
+  useEffect(
+    // Effect
+    function () {
+      // Implementação temporária para exibir se o mário
+      // está no cano ou não
+      const interval = setInterval(function () {
+        // Pegamos o valor que determinar se o Mario
+        // está no cano ou não
+        const estaNoCano = marioEstaNoCano();
 
-    // Caso esteja no cano, atualizamos o estado
-    // `estaMorto` para `true`
-    setEstaMorto(true);
-  }, 100);
+        // Se o Mario não estiver no cano, encerramos a função com `return`
+        if (!estaNoCano || estaMorto) {
+          return;
+        }
+        // Caso esteja no cano, atualizamos o estado
+        // `estaMorto` para `true`
+        setEstaMorto(true);
+        props.onMorrer();
+      }, 100);
+      
+      return () => clearInterval(interval);
+      // (Opcional) Return mecanismo que desfaz o Effect anterior
+    },
+    // Lista de dependências
+    [estaMorto]
+  );
 
   // UseEffect
   useEffect(
