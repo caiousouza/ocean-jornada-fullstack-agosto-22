@@ -114,6 +114,7 @@ function Jogo() {
 
   return (
     <div className="jogo">
+    <div>Pontos: {pontos}</div>
       <img className="nuvens" src={nuvens} alt="Nuvens" />
 
       <img
