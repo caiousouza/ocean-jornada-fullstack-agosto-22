@@ -27,6 +27,7 @@ function Jogo(props) {
   // Criamos as referências para `mario` e `cano`
   const marioRef = useRef();
   const canoRef = useRef();
+
   function marioEstaNoCano() {
     // Acessamos as referências do mario e do cano
     const mario = marioRef.current;
@@ -60,17 +61,18 @@ function Jogo(props) {
         if (!estaNoCano || estaMorto) {
           return;
         }
+
         // Caso esteja no cano, atualizamos o estado
         // `estaMorto` para `true`
         setEstaMorto(true);
         props.onMorrer();
       }, 100);
-      
-      return () => clearInterval(interval);
+
       // (Opcional) Return mecanismo que desfaz o Effect anterior
+      return () => clearInterval(interval);
     },
     // Lista de dependências
-    [estaMorto]
+    [estaMorto, props]
   );
 
   // UseEffect
@@ -83,13 +85,14 @@ function Jogo(props) {
         }
 
     setPontos(pontos + 1);
+    props.onPontos(pontos + 1);
 
   console.log({ pontos });
     }, 500);
 
     return () => clearInterval(interval);
     },
-    [estaMorto, pontos]
+    [estaMorto, pontos, props]
   );
 
   document.onkeydown = function () {

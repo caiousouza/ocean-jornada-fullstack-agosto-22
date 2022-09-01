@@ -5,17 +5,20 @@ import "./App.css";
 
 function App() {
   const [gameOver, setGameOver] = useState(false);
+  const [pontos, setPontos] = useState(0);
 
   function onMorrer() {
-    console.log("App -> onMorrer");
+   setGameOver(true);
+  }
+
+  function onPontos(novosPontos) {
+    setPontos(novosPontos);
   }
 
   return (
     <div className="App">
-      <Jogo />
-      <HighScore />
-      <Jogo onMorrer={onMorrer} />
-      {gameOver && <HighScore />}
+      <Jogo onMorrer = {onMorrer} onPontos = {onPontos} />
+      {gameOver && <HighScore pontos = {pontos} />}
     </div>
   );
 }
