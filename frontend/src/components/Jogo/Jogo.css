@@ -25,13 +25,6 @@
   bottom: 30px;
   right: 50px;
 
-  /*
-  animation-name: mover-direita-para-esquerda;
-  animation-duration: 2s;
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
-  */
-
   animation: mover-direita-para-esquerda infinite 2s linear;
 }
 
